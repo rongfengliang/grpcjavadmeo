@@ -1,0 +1,52 @@
+syntax="proto3";
+package userservice;
+option java_package ="com.dalong.userappservice";
+option go_package="userservice";
+option java_outer_classname="AppService";
+option java_multiple_files=true;
+service UserService{
+    rpc UserInfo(UserRequest) returns(UserResponse);
+    rpc WatchMessage(MessageInfo) returns(stream MessageResponse);
+}
+message MessageInfo{
+    string messageoid=1;
+}
+message MessageResponse{
+    string messageresult=1;
+    string code=2;
+}
+message UserRequest{
+    string userid=1;
+}
+message PersonRequest{
+    string personid=1;
+}
+message PlatformRequest{
+    string platformid=1;
+}
+message UserResponse{
+    int32 code=1;
+    string message=2;
+    MixInfo result=3;
+}
+message Project{
+    string projectid=1;
+    string projectname=2;
+    string projecttype=3;
+}
+
+message AppDemo{
+    map<string, Project> projects = 4;
+    oneof Request{
+        UserRequest userrequest=1;
+        PersonRequest personrequest=2;
+        PlatformRequest   platformrequest=3;
+    }
+}
+message MixInfo{
+    string  username=1;
+    string orgname=2;
+    string orgid=3;
+    string enterprise=4;
+    string enterpriseid=5;
+}
